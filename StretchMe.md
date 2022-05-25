@@ -1,0 +1,13 @@
+﻿#Virtual Pets Upgrade
+##Overview
+Our virtual pet needs a Windows Form Upgrade. Windows Forms is a UI framework for creating windows applications. You can add a new project to this existing solution. When your application is compiled it will be given an .exe file that will be able to run on any Windows device.
+
+##Tools and Tips
+Windows Forms leverage the Toolbox feature of Visual Studio and allow us to create a Form using WSIWYG display. I have uploaded a [Windows Form Template](https://wecancodeit.github.io/template-csharp-winform) that you can use to see and implement similar features. In doing so you will encounter [deletegate](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) methods. Be sure to read up on them, but essential they allow us to create custom events and handle them programmatically.
+
+##Where to Begin
+You will want to continue adding on to this solution. I would suggest starting by adding a [Windows Form App](https://docs.microsoft.com/en-us/dotnet/desktop/winforms/get-started/create-app-visual-studio?view=netdesktop-5.0) to the Solution - you will want the .NET50 Framework. Once the new project has been added you should be able to start designing your forms.
+
+You will need add a Menu bar that will feature all the actions available on your console menu. You will need to create a form for each input area of your existing console application.
+
+The sample template includes many comments that will help you figure out what code needs to be added and where. It features a DialogBox, an intake form, and an example of using a delegate handler.
