@@ -170,6 +170,7 @@ while (isRunning)
                     break;
                 }
             }
+            
             while (type == "no")
             {
                 Console.Clear();
@@ -211,7 +212,16 @@ while (isRunning)
                     break;
                 }
             }
-            break;
+            if (activePet.Health <= 0)
+            {
+                pets.Remove(activePet);
+                activePet = new Pet();
+                Console.WriteLine("Your pet has died.");
+                Console.WriteLine("Press enter to continue");
+                Console.ReadLine();
+                break;
+            }
+                break;
         case 4:                                            // go to shelter
             Console.Clear();
             Console.WriteLine($"What would you like to do?" +
@@ -259,28 +269,18 @@ while (isRunning)
             {
                 foreach (Pet pet in pets)
                 {
-                    pet.SeeDoctor();
-                    Console.WriteLine("All pets in the shelter have been healed!");
-                }
-            }
-            if (type == "yes")
-            {
-                if (__selection == 5)
-                {
-                    foreach (Pet pet in pets)
+                    if (pet.GetType() == typeof(RoboticPet))
                     {
-                        if (pet.GetType() == typeof(RoboticPet))
-                        {
-                            RoboticPet temp = (RoboticPet)activePet;
-                            temp.RepairArmor();
-                        }
-                        Console.WriteLine("All pets in the shelter have been healed!");
+                        RoboticPet temp = (RoboticPet)pet;
+                        temp.RepairArmor();
+                        temp.RechargeBattery();
+                    }
+                    else
+                    {
+                        pet.SeeDoctor();
                     }
                 }
-                else
-                {
-
-                }
+                Console.WriteLine("Status for all pets have been replenished!");
             }
             break;
         default:
