@@ -66,17 +66,31 @@ while (isRunning)
 
             Console.WriteLine("Is this pet Robotic? (yes or no)");
             type = Console.ReadLine().ToLower();
+            if (type == "no")                                               //TODO: currently if a user creates new pet from main, organic pets are added twice.
+            {
+                activePet = new Pet(name, species);
+                pets.Add(activePet);
+            }
             if (type == "yes")
             {
                 activePet = new RoboticPet(name, species);
+                pets.Add(activePet);
+            }
+
+            Pet toAdd = new Pet(name, species);
+            pets.Add(toAdd);
+
+            if (activePet.GetType() == typeof(RoboticPet))
+            {
+                toAdd = new RoboticPet(name, species);
                 Console.WriteLine($"A new robotic {species} named, {name} has been created!");
                 Console.WriteLine("Since it is robotic, it will not lose health over time. But, it does have a battery that must be recharged!");
                 Console.WriteLine("Press enter to continue");
                 Console.ReadLine();
             }
-            else if (type == "no")
+            else if (activePet.GetType() != typeof(RoboticPet))
             {
-                activePet = new Pet(name, species);
+                toAdd = new Pet(name, species);
                 Console.WriteLine($"A new {species} named, {name} has been created!");
                 Console.WriteLine("This pet is organic, you must take care of it!");
                 Console.WriteLine("Press enter to continue");
@@ -84,50 +98,45 @@ while (isRunning)
             }
             else
             {
-                activePet = new Pet(name, species);
+                toAdd = new Pet(name, species);
                 Console.WriteLine("A default pet has been created.");
             }
-            Pet toAdd = new Pet(name, species);
-            pets.Add(toAdd);
+
             break;
         case 2:                                                              // display all pet statuses
             Console.Clear();
-                if (type == "no")
+            for(int i = 0; i < pets.Count; i++)
                 {
-                    for (int i = 0; i < pets.Count; i++)
-                    {
-                        Console.WriteLine($"{pets[i].Name}" +
-                            $"\nHealth: {pets[i].Health}" +
-                            $"\nBoredom: {pets[i].Boredom}" +
-                            $"\nHunger: {pets[i].Hunger}");
-                    }
-                }
-                if (type == "yes")
+                if (activePet.GetType() == typeof(RoboticPet))
                 {
-
-                for (int i = 0; i < pets.Count; i++)
-                    {
-                        Console.WriteLine($"{pets[i].Name}" +
-                            $"\nHealth: {pets[i].Health}" +
-                            $"\nBoredom: {pets[i].Boredom}" +
-                            $"\nHunger: {pets[i].Hunger}" //+
-                            //$"\nBattery: {pets[i].Battery}" +
-                            //$"\nArmor: {pets[i].Armor}"
-                            );
-                    }
+                    Console.WriteLine($"{pets[i].Name}" +
+                        $"\nHealth: {pets[i].Health}" +
+                        $"\nBoredom: {pets[i].Boredom}" +
+                        $"\nHunger: {pets[i].Hunger}" //+
+                        //$"\nBattery: {pets[i].Battery}" +
+                        //$"\nArmor: {pets[i].Armor}"
+                        );
                 }
+                else
+                {
+                    Console.WriteLine($"{pets[i].Name}" +
+                        $"\nHealth: {pets[i].Health}" +
+                        $"\nBoredom: {pets[i].Boredom}" +
+                        $"\nHunger: {pets[i].Hunger}");
+                }
+            }
             Console.WriteLine("Press enter to continue");
             Console.ReadLine();
             break;
         case 3:                                                         // interact with pet
-            while (type == "yes")
+            while (activePet.GetType() == typeof(RoboticPet))
             {
                 Console.Clear();
                 Console.WriteLine("What would you like to do with your pet?");
                 Console.WriteLine($"1 - Take {activePet.Name} to Doctor" +
                     $"\n2 - Play with {activePet.Name}" +
                     $"\n3 - Feed {activePet.Name}" +
-                    $"\n4 - Recharge {activePet.Name}'s battery" + 
+                    $"\n4 - Recharge {activePet.Name}'s battery" +
                     $"\n5 - Repair {activePet.Name}'s armor" +
                     $"\n6 - Go back to Main Menu");
                 int _selection = Int32.Parse(Console.ReadLine());
@@ -165,13 +174,8 @@ while (isRunning)
                     RoboticPet temp = (RoboticPet)activePet;
                     temp.RepairArmor();
                 }
-                else
-                {
-                    break;
-                }
             }
-            
-            while (type == "no")
+            while(activePet.GetType() != typeof(RoboticPet))
             {
                 Console.Clear();
                 Console.WriteLine("What would you like to do with your pet?");
@@ -204,7 +208,7 @@ while (isRunning)
                     Console.WriteLine("Press enter to continue");
                     Console.ReadLine();
                 }
-                else
+                else if (selection == 4)
                 {
                     Console.WriteLine("Returning to Main Menu.");
                     Console.WriteLine("Press enter to continue");
@@ -212,6 +216,7 @@ while (isRunning)
                     break;
                 }
             }
+
             if (activePet.Health <= 0)
             {
                 pets.Remove(activePet);
