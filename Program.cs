@@ -66,7 +66,7 @@ while (isRunning)
 
             Console.WriteLine("Is this pet Robotic? (yes or no)");
             type = Console.ReadLine().ToLower();
-            if (type == "no")                                               //TODO: currently if a user creates new pet from main, organic pets are added twice.
+            if (type == "no")                                              
             {
                 activePet = new Pet(name, species);
                 pets.Add(activePet);
@@ -77,12 +77,12 @@ while (isRunning)
                 pets.Add(activePet);
             }
 
-            Pet toAdd = new Pet(name, species);
-            pets.Add(toAdd);
+            
+            
 
             if (activePet.GetType() == typeof(RoboticPet))
             {
-                toAdd = new RoboticPet(name, species);
+                activePet = new RoboticPet(name, species);
                 Console.WriteLine($"A new robotic {species} named, {name} has been created!");
                 Console.WriteLine("Since it is robotic, it will not lose health over time. But, it does have a battery that must be recharged!");
                 Console.WriteLine("Press enter to continue");
@@ -90,7 +90,7 @@ while (isRunning)
             }
             else if (activePet.GetType() != typeof(RoboticPet))
             {
-                toAdd = new Pet(name, species);
+                activePet = new Pet(name, species);
                 Console.WriteLine($"A new {species} named, {name} has been created!");
                 Console.WriteLine("This pet is organic, you must take care of it!");
                 Console.WriteLine("Press enter to continue");
@@ -98,7 +98,7 @@ while (isRunning)
             }
             else
             {
-                toAdd = new Pet(name, species);
+                activePet = new Pet(name, species);
                 Console.WriteLine("A default pet has been created.");
             }
 
